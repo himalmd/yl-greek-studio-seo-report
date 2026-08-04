@@ -148,6 +148,43 @@
     font-weight: 400; font-family: 'Inter', sans-serif; margin-top: 2px; text-transform: none; letter-spacing: 0;
   }
 
+  /* Highlight Metrics */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 16px;
+    margin: 24px 0 32px;
+  }
+  .metric-card {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  }
+  .metric-card strong {
+    display: block;
+    font-size: 28px;
+    color: var(--signal);
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .metric-card .metric-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .metric-card.critical strong {
+    color: var(--coral);
+  }
+  .metric-card.warn strong {
+    color: var(--amber);
+  }
+
   /* Chart card */
   .chart-card{
     background:var(--panel); border:1px solid var(--hairline); border-radius:12px;
@@ -229,7 +266,7 @@
   @media print {
     body { background: #fff; color: #000; }
     .topbar { position: static; border: none; background: transparent; padding: 0 0 20px 0; }
-    nav.section-nav { display: none; }
+    nav.section-nav, .print-btn { display: none !important; }
     .finding-body { display: block !important; }
     .finding.expanded .caret, .finding .caret { display: none; }
     .chart-card, .gauge-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
@@ -247,21 +284,28 @@
     <div class="brand-mark">Y</div>
     <div class="brand-text"><strong>YL Studio Greek</strong> · SEO audit</div>
   </div>
-  <nav class="section-nav">
-    <a href="#summary">Summary</a>
-    <a href="#indexation">Indexation</a>
-    <a href="#technical">Technical</a>
-    <a href="#onpage">On-page</a>
-    <a href="#offpage">Off-page</a>
-    <a href="#plan">Action plan</a>
-  </nav>
+  <div style="display: flex; align-items: center; gap: 24px;">
+    <nav class="section-nav">
+      <a href="#summary">Summary</a>
+      <a href="#indexation">Indexation</a>
+      <a href="#technical">Technical</a>
+      <a href="#onpage">On-page</a>
+      <a href="#offpage">Off-page</a>
+      <a href="#plan">Action plan</a>
+    </nav>
+    <button class="print-btn" onclick="window.print()" style="background: var(--ink); color: var(--paper); border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Print PDF</button>
+  </div>
 </div>
 
 <div class="wrap">
   <section class="hero" id="summary">
+    <div style="margin-bottom: 32px; border-radius: 12px; overflow: hidden; border: 1px solid var(--hairline);">
+      <img src="assets/yl-studio-thumbnail.webp" alt="YL Studio Greek SEO Report" style="width: 100%; height: auto; display: block;" />
+    </div>
     <div class="eyebrow">SEO audit report — ylstudiogreek.com</div>
-    <h1>A strong foundation ready for technical cleanup.</h1>
-    <p class="sub">YL Studio has excellent on-page social proof and brand demand — 488+ reviews, five-star ratings, and authorized-vendor status with three major sororities — but a high volume of duplicate URLs and third-party app scripts are currently creating crawl bloat and performance drag. This report outlines how to clean up that technical noise so search engines focus strictly on your primary product catalog.</p>
+    <h1 style="margin-bottom: 16px;">Comprehensive SEO Audit</h1>
+    <div style="font-size: 24px; font-family: 'Newsreader', serif; font-weight: 500; color: var(--ink); line-height: 1.25; max-width: 760px; margin-bottom: 20px;">A strong foundation ready for technical cleanup.</div>
+    <p class="sub" style="margin-top:0;">YL Studio has excellent on-page social proof and brand demand — 488+ reviews, five-star ratings, and authorized-vendor status with three major sororities — but a high volume of duplicate URLs and third-party app scripts are currently creating crawl bloat and performance drag. This report outlines how to clean up that technical noise so search engines focus strictly on your primary product catalog.</p>
     <div class="meta-row">
       <div class="meta-item"><strong>Aug 1, 2026</strong>Report date</div>
       <div class="meta-item"><strong>Search Console & GTmetrix</strong>Primary data sources</div>
@@ -384,12 +428,12 @@
     <div class="section-head"><span class="section-num">02</span><h2>Technical & Site Speed SEO</h2></div>
     <p class="section-intro">The platform-level foundation is in good shape, but front-end performance requires immediate attention. We conducted a GTmetrix analysis (Seattle test server, Desktop) to trace the cause of the slow load times.</p>
 
-    <div class="stat-strip" style="margin:24px 0 32px;">
-      <div><strong>D (63%)</strong>GTmetrix Grade</div>
-      <div><strong>8.46 MB</strong>Total Page Payload</div>
-      <div><strong>419</strong>Total Requests</div>
-      <div><strong>13.9s</strong>Fully Loaded Time <span class="target">Target: < 3.0s</span></div>
-      <div><strong>1.3s</strong>Total Blocking Time (TBT) <span class="target">Target: < 150ms</span></div>
+    <div class="metrics-grid">
+      <div class="metric-card critical"><strong>D (63%)</strong><div class="metric-label">GTmetrix Grade</div></div>
+      <div class="metric-card critical"><strong>8.46 MB</strong><div class="metric-label">Total Page Payload</div></div>
+      <div class="metric-card warn"><strong>419</strong><div class="metric-label">Total Requests</div></div>
+      <div class="metric-card critical"><strong>13.9s</strong><div class="metric-label">Fully Loaded Time <span class="target">Target: < 3.0s</span></div></div>
+      <div class="metric-card critical"><strong>1.3s</strong><div class="metric-label">Total Blocking Time <span class="target">Target: < 150ms</span></div></div>
     </div>
 
     <div class="finding" data-open="true">
@@ -399,6 +443,15 @@
       </div>
       <div class="finding-body open">
         <p>A typical, well-optimized e-commerce homepage sits around 2.5MB to 3MB. YL Studio is downloading <strong>8.46 MB</strong> of data via an astounding <strong>419 HTTP requests</strong>. The majority of this weight is coming from <strong>3.15 MB of JavaScript</strong>.</p>
+        
+        <div class="chart-card" style="margin-top:12px; margin-bottom: 20px;">
+          <h4>Payload Breakdown</h4>
+          <div class="chart-sub">JavaScript makes up 37% of the total 8.46 MB payload, heavily blocking the main thread.</div>
+          <div style="position:relative; height:180px;">
+            <canvas id="payloadChart" role="img" aria-label="Doughnut chart showing 3.15MB of JS and 5.31MB of other resources."></canvas>
+          </div>
+        </div>
+
         <p>Looking at the waterfall chart, the site is saturated with heavy, unoptimized third-party Shopify apps. The browser is spending 6.8 seconds just trying to execute tasks on the main thread, stalling the page from becoming interactive. The heaviest offenders dragging down the site speed include:</p>
         <ul>
           <li>PageFly (multiple sliders, helper, and slideshow scripts)</li>
@@ -564,12 +617,12 @@
     <div class="section-head"><span class="section-num">04</span><h2>Off-page SEO</h2></div>
     <p class="section-intro">Domain-wide backlink data now confirmed via Moz Pro, layered on top of the homepage-level Seobility numbers.</p>
 
-    <div class="stat-strip" style="margin:0 0 24px;">
-      <div><strong>35</strong>Domain Authority <span class="target">Target: 45+</span></div>
-      <div><strong>97</strong>Linking domains <span class="target">Target: 200+</span></div>
-      <div><strong>339</strong>Inbound links</div>
-      <div><strong>103</strong>Ranking keywords</div>
-      <div><strong>–8</strong>Net linking domains, 60 days <span class="target">Target: Positive growth</span></div>
+    <div class="metrics-grid" style="margin:0 0 24px;">
+      <div class="metric-card warn"><strong>35</strong><div class="metric-label">Domain Authority <span class="target">Target: 45+</span></div></div>
+      <div class="metric-card warn"><strong>97</strong><div class="metric-label">Linking domains <span class="target">Target: 200+</span></div></div>
+      <div class="metric-card"><strong>339</strong><div class="metric-label">Inbound links</div></div>
+      <div class="metric-card"><strong>103</strong><div class="metric-label">Ranking keywords</div></div>
+      <div class="metric-card critical"><strong>–8</strong><div class="metric-label">Net linking domains <span class="target">Target: Positive growth</span></div></div>
     </div>
 
     <div class="finding" data-open="true">
@@ -581,6 +634,23 @@
         <p>Moz's link data raises a flag beyond "thin backlinks." Several of the highest-authority referring pages read as spam-forum injections rather than genuine mentions — a Cornell University subdomain forum post (<span class="mono">yambase-test.sgn.cornell.edu/forum/add_post.pl...</span>) and multiple <span class="mono">accounts.cancer.org</span> login-redirect URLs that reference the domain in a query parameter rather than linking to it editorially.</p>
         <p>More notable: Moz's "Top pages on this site" list includes a <strong>Russian-language URL</strong> (<span class="mono">ylstudiogreek.com/список-записей-обновляемый/</span>, roughly "list of updated records") and a page with an opaque encoded query string, both carrying real Page Authority and repeated anchor text pointing to them. A foreign-language slug appearing on an English apparel storefront is a common signature of either a compromised/injected page or a spam redirect exploiting the domain. Also worth a look: <span class="mono">www.www.ylstudiogreek.com</span> shows up as an indexed page variant, which points to a possible redirect misconfiguration.</p>
         <p><strong>Recommended next step:</strong> check the site directly for that Russian-language URL and the malformed <span class="mono">www.www.</span> variant, and if either resolves to real (unauthorized) content, treat it as a security issue first — clean it up, then follow with a Google disavow file for the spam-forum links once confirmed they aren't providing any value.</p>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom: 24px; margin-top: 24px;">
+      <div class="chart-card" style="margin-top:0;">
+        <h4>Link Trend (60 Days)</h4>
+        <div class="chart-sub">Net loss of 8 linking domains.</div>
+        <div style="position:relative; height:180px;">
+          <canvas id="linkTrendChart" role="img" aria-label="Bar chart showing 2 domains gained vs 10 domains lost."></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-top:0;">
+        <h4>External Link Equity</h4>
+        <div class="chart-sub">89.1% of external links pass PageRank (Follow).</div>
+        <div style="position:relative; height:180px;">
+          <canvas id="linksChart" role="img" aria-label="Pie chart showing 89.1% follow vs 10.9% nofollow links."></canvas>
+        </div>
       </div>
     </div>
 
@@ -712,6 +782,13 @@
 </div>
 
 <script>
+  // Expand all findings by default
+  document.querySelectorAll('.finding').forEach(card => {
+    card.classList.add('expanded');
+    const body = card.querySelector('.finding-body');
+    if (body) body.classList.add('open');
+  });
+
   function toggleFinding(headEl){
     const card = headEl.parentElement;
     const body = card.querySelector('.finding-body');
@@ -838,6 +915,66 @@
       scales: {
         x: { grid: { color: gridColor } },
         y: { grid: { display:false }, ticks: { font:{ size:11.5 } } }
+      }
+    }
+  });
+
+  // Payload Breakdown
+  new Chart(document.getElementById('payloadChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['JavaScript', 'Other Resources'],
+      datasets: [{
+        data: [3.15, 5.31],
+        backgroundColor: ['#C1502E', '#E7EEF8'],
+        borderWidth: 0,
+        cutout: '65%'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Link Trend
+  new Chart(document.getElementById('linkTrendChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Gained', 'Lost'],
+      datasets: [{
+        data: [2, 10],
+        backgroundColor: ['#3F7D53', '#C1502E'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: gridColor }, suggestedMax: 12 },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // Links Follow Ratio
+  new Chart(document.getElementById('linksChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Follow', 'Nofollow'],
+      datasets: [{
+        data: [89.1, 10.9],
+        backgroundColor: ['#2A5CAA', '#E7EEF8'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }
       }
     }
   });
