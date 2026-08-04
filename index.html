@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Audit — YL Studio Greek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --ink:#161A21;
+    --ink-soft:#3A3F4A;
+    --slate:#6B7080;
+    --paper:#FBFAF6;
+    --panel:#FFFFFF;
+    --hairline:#E4E1D6;
+    --signal:#2A5CAA;
+    --signal-soft:#E7EEF8;
+    --coral:#C1502E;
+    --coral-soft:#FBEAE3;
+    --amber:#B8790B;
+    --amber-soft:#FBF0DC;
+    --moss:#3F7D53;
+    --moss-soft:#E7F1EA;
+    --pending:#6B7080;
+    --pending-soft:#EEEDE8;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{
+    font-family:'Newsreader',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:var(--signal);}
+  img{max-width:100%;}
+
+  /* Top bar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,250,246,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+  }
+  .topbar .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{
+    width:28px; height:28px; border-radius:6px;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Newsreader',serif; font-size:15px; font-weight:600;
+  }
+  .brand-text{font-size:13px; color:var(--slate); letter-spacing:0.02em;}
+  .brand-text strong{color:var(--ink); font-weight:600;}
+  nav.section-nav{display:flex; gap:22px;}
+  nav.section-nav a{
+    font-size:13px; color:var(--slate); text-decoration:none;
+    font-weight:500; letter-spacing:0.01em;
+    padding-bottom:3px; border-bottom:1px solid transparent;
+  }
+  nav.section-nav a:hover{color:var(--ink); border-bottom-color:var(--ink);}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  /* Hero */
+  .hero{padding:64px 0 40px;}
+  .eyebrow{
+    font-size:12px; text-transform:uppercase; letter-spacing:0.12em;
+    color:var(--slate); font-weight:600; margin-bottom:14px;
+  }
+  .hero h1{font-size:42px; line-height:1.15; max-width:760px;}
+  .hero .sub{font-size:17px; color:var(--ink-soft); max-width:640px; margin-top:16px;}
+  .meta-row{display:flex; gap:24px; margin-top:28px; flex-wrap:wrap;}
+  .meta-item{font-size:13px; color:var(--slate);}
+  .meta-item strong{color:var(--ink); font-weight:600; display:block; font-size:14px; margin-bottom:2px;}
+
+  /* Pillars */
+  .pillars{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+    margin:36px 0 0;
+  }
+  .pillar{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:18px; display:flex; flex-direction:column; gap:10px;
+  }
+  .pillar .name{font-size:13px; font-weight:600; color:var(--ink);}
+  .chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;
+    width:fit-content;
+  }
+  .chip::before{content:''; width:6px; height:6px; border-radius:50%;}
+  .chip.critical{background:var(--coral-soft); color:var(--coral);}
+  .chip.critical::before{background:var(--coral);}
+  .chip.warn{background:var(--amber-soft); color:var(--amber);}
+  .chip.warn::before{background:var(--amber);}
+  .chip.good{background:var(--moss-soft); color:var(--moss);}
+  .chip.good::before{background:var(--moss);}
+  .chip.pending{background:var(--pending-soft); color:var(--pending);}
+  .chip.pending::before{background:var(--pending);}
+  .pillar p{font-size:13px; color:var(--slate); margin:0;}
+
+  /* Section shell */
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--hairline);}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:8px;}
+  .section-num{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--slate);}
+  section h2{font-size:28px;}
+  .section-intro{color:var(--ink-soft); max-width:680px; margin-top:10px; font-size:15.5px;}
+
+  /* Hero gauge card */
+  .gauge-card{
+    display:grid; grid-template-columns:220px 1fr; gap:32px; align-items:center;
+    background:var(--panel); border:1px solid var(--hairline); border-radius:16px;
+    padding:28px; margin-top:32px;
+  }
+  .gauge-wrap{position:relative; width:200px; height:200px; margin:0 auto;}
+  .gauge-num{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .gauge-num .big{font-family:'Newsreader',serif; font-size:44px; font-weight:500; color:var(--coral);}
+  .gauge-num .small{font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;}
+  .gauge-copy h3{font-size:18px; margin-bottom:8px;}
+  .gauge-copy p{font-size:14.5px; color:var(--ink-soft); margin:0 0 12px;}
+  .stat-strip{display:flex; gap:28px; margin-top:14px; flex-wrap:wrap;}
+  .stat-strip div{font-size:13px; color:var(--slate);}
+  .stat-strip strong{display:block; font-size:20px; color:var(--ink); font-family:'Newsreader',serif; font-weight:500;}
+  
+  /* Target benchmark for stats */
+  .target {
+    display: block; font-size: 11.5px; color: var(--slate); 
+    font-weight: 400; font-family: 'Inter', sans-serif; margin-top: 2px; text-transform: none; letter-spacing: 0;
+  }
+
+  /* Chart card */
+  .chart-card{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:12px;
+    padding:22px; margin-top:24px;
+  }
+  .chart-card h4{font-size:14px; font-weight:600; margin-bottom:2px;}
+  .chart-card .chart-sub{font-size:12.5px; color:var(--slate); margin-bottom:16px;}
+  .legend-row{display:flex; gap:16px; margin:10px 0 4px; font-size:12px; color:var(--slate); flex-wrap:wrap;}
+  .legend-row span{display:flex; align-items:center; gap:5px;}
+  .dot{width:9px; height:9px; border-radius:2px; display:inline-block;}
+
+  /* Finding cards */
+  .finding{
+    border:1px solid var(--hairline); border-radius:12px; background:var(--panel);
+    margin-top:14px; overflow:hidden;
+  }
+  .finding-head{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:16px 18px; cursor:pointer; user-select:none;
+  }
+  .finding-head:hover{background:var(--paper);}
+  .finding-title{display:flex; align-items:center; gap:12px;}
+  .finding-title h4{font-size:15px; font-weight:600; margin:0;}
+  .finding-body{
+    padding:0 18px 18px; font-size:14px; color:var(--ink-soft);
+    display:none;
+  }
+  .finding-body.open{display:block;}
+  .finding-body ul{margin:8px 0 0; padding-left:20px;}
+  .finding-body li{margin-bottom:6px;}
+  .caret{color:var(--slate); font-size:13px; transition:transform 0.15s ease;}
+  .finding.expanded .caret{transform:rotate(90deg);}
+
+  table{width:100%; border-collapse:collapse; margin-top:16px; font-size:13.5px;}
+  th{
+    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--slate); font-weight:600; padding:8px 10px; border-bottom:1px solid var(--hairline);
+  }
+  td{padding:10px; border-bottom:1px solid var(--hairline); vertical-align:top; color:var(--ink-soft);}
+  tr:last-child td{border-bottom:none;}
+  td.mono{font-size:12px;}
+  .tag{
+    display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;
+  }
+  .tag.critical{background:var(--coral-soft); color:var(--coral);}
+  .tag.warn{background:var(--amber-soft); color:var(--amber);}
+  .tag.good{background:var(--moss-soft); color:var(--moss);}
+  .tag.pending{background:var(--pending-soft); color:var(--pending);}
+
+  /* action plan */
+  .action-row{
+    display:grid; grid-template-columns:28px 1fr 90px 90px; gap:14px; align-items:start;
+    padding:14px 0; border-bottom:1px solid var(--hairline);
+  }
+  .action-row:last-child{border-bottom:none;}
+  .action-row input[type=checkbox]{
+    width:18px; height:18px; margin-top:2px; accent-color:var(--signal); cursor:pointer;
+  }
+  .action-row.done .action-title{color:var(--slate); text-decoration:line-through;}
+  .action-title{font-size:14.5px; font-weight:600; color:var(--ink); margin-bottom:3px;}
+  .action-desc{font-size:13px; color:var(--slate);}
+  .action-desc code{background:var(--hairline); padding:2px 4px; border-radius:4px; font-size:12px; color:var(--ink);}
+  .badge-col{font-size:12px; color:var(--slate); text-transform:uppercase; letter-spacing:0.04em; padding-top:2px;}
+  .badge-col .val{display:block; font-size:13px; color:var(--ink); text-transform:none; font-weight:600; margin-top:2px;}
+
+  footer{padding:40px 0 60px; color:var(--slate); font-size:12.5px;}
+  footer .wrap{border-top:1px solid var(--hairline); padding-top:24px;}
+
+  @media (max-width:760px){
+    nav.section-nav{display:none;}
+    .pillars{grid-template-columns:repeat(2,1fr);}
+    .gauge-card{grid-template-columns:1fr; text-align:center;}
+    .action-row{grid-template-columns:24px 1fr; }
+    .badge-col{display:none;}
+    .hero h1{font-size:32px;}
+  }
+
+  /* Print Support */
+  @media print {
+    body { background: #fff; color: #000; }
+    .topbar { position: static; border: none; background: transparent; padding: 0 0 20px 0; }
+    nav.section-nav { display: none; }
+    .finding-body { display: block !important; }
+    .finding.expanded .caret, .finding .caret { display: none; }
+    .chart-card, .gauge-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+    .wrap { max-width: 100%; padding: 0 15mm; }
+    section { padding: 30px 0; page-break-inside: auto; }
+    .action-row, .finding { page-break-inside: avoid; }
+    .chip, .tag { border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">Y</div>
+    <div class="brand-text"><strong>YL Studio Greek</strong> · SEO audit</div>
+  </div>
+  <nav class="section-nav">
+    <a href="#summary">Summary</a>
+    <a href="#indexation">Indexation</a>
+    <a href="#technical">Technical</a>
+    <a href="#onpage">On-page</a>
+    <a href="#offpage">Off-page</a>
+    <a href="#plan">Action plan</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <section class="hero" id="summary">
+    <div class="eyebrow">SEO audit report — ylstudiogreek.com</div>
+    <h1>A strong foundation ready for technical cleanup.</h1>
+    <p class="sub">YL Studio has excellent on-page social proof and brand demand — 488+ reviews, five-star ratings, and authorized-vendor status with three major sororities — but a high volume of duplicate URLs and third-party app scripts are currently creating crawl bloat and performance drag. This report outlines how to clean up that technical noise so search engines focus strictly on your primary product catalog.</p>
+    <div class="meta-row">
+      <div class="meta-item"><strong>Aug 1, 2026</strong>Report date</div>
+      <div class="meta-item"><strong>Search Console & GTmetrix</strong>Primary data sources</div>
+      <div class="meta-item"><strong>May 4 – Jul 24, 2026</strong>GSC Analysis window</div>
+      <div class="meta-item"><strong>Shopify</strong>Platform</div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <span class="chip warn">Needs cleanup</span>
+        <div class="name">Indexation</div>
+        <p>11.2% index rate. Root cause identified: duplicate URL sprawl inflating crawl numbers.</p>
+      </div>
+      <div class="pillar">
+        <span class="chip warn">Needs work</span>
+        <div class="name">On-page SEO</div>
+        <p>Truncated meta descriptions, generic titles, thin collection copy.</p>
+      </div>
+      <div class="pillar">
+        <span class="chip critical">Action required</span>
+        <div class="name">Technical SEO</div>
+        <p>Canonicals & schema are solid, but GTmetrix score is a "D" (63%) with an 8.46MB payload.</p>
+      </div>
+      <div class="pillar">
+        <span class="chip critical">Thin & declining</span>
+        <div class="name">Off-page SEO</div>
+        <p>Domain Authority 35, only 97 linking domains, losing more links than gaining.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="indexation">
+    <div class="section-head"><span class="section-num">01</span><h2>Indexation health</h2></div>
+    <p class="section-intro">Google Search Console shows 1,643 known URLs on the site. This is the single biggest lever in the audit — everything else (copy, links, authority) is wasted effort on pages Google won't show.</p>
+
+    <div class="gauge-card">
+      <div class="gauge-wrap">
+        <canvas id="gaugeChart"></canvas>
+        <div class="gauge-num"><span class="big">11.2%</span><span class="small">indexed</span></div>
+      </div>
+      <div class="gauge-copy">
+        <h3>184 of 1,643 known pages are indexed</h3>
+        <p>That leaves 1,459 pages Google knows about but won't show in search. The good news is that the core catalog is largely safe within those 184 pages—the low percentage is primarily caused by thousands of duplicate URLs artificially inflating the total page count.</p>
+        <div class="stat-strip">
+          <div><strong>1,643</strong>Known pages</div>
+          <div><strong>184</strong>Indexed <span class="target">Target: ~1,100+</span></div>
+          <div><strong>+27%</strong>Indexed growth, 12wk</div>
+          <div><strong>+42%</strong>Impressions growth, 12wk</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h4>Index rate over time</h4>
+      <div class="chart-sub">Weekly indexed-page ratio, May 4 – Jul 24, 2026. Trending up, but off a very low base.</div>
+      <div style="position:relative; height:220px;">
+        <canvas id="trendChart" role="img" aria-label="Line chart of index rate percentage rising from 7.1% on May 4 to 11.2% by July 24, 2026, showing a plateau since mid June."></canvas>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px; font-size:19px;">Why so many pages are excluded</h3>
+    <p class="section-intro">We pulled the underlying GSC export for every exclusion reason. The two biggest buckets sound alarming but are non-issues; the third is where the real problem lives.</p>
+
+    <div class="finding" data-open="false">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag good">Resolved</span><h4>340 pages "excluded by noindex tag"</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>We exported the full URL list. <strong>339 of 340</strong> are <span class="mono">/services/login_with_shop/authorize</span> links — Shop Pay's login pre-qualification flow, which generates a fresh tracking ID on every load and is correctly auto-noindexed by Shopify. This is not a bug.</p>
+        <p>The one real product on the list, <span class="mono">rho-pi-group-order-aka-knit-mesh-jersey</span>, is worth a manual check — it looks like an unlisted "group order" link meant to be shared directly rather than surfaced in search, which is likely intentional.</p>
+      </div>
+    </div>
+
+    <div class="finding" data-open="false">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag good">Resolved</span><h4>324 pages "blocked by robots.txt"</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>The live robots.txt is essentially Shopify's stock file. It blocks collection sort/filter-combination URLs, cart, checkout, account, search, and the auto-generated <span class="mono">/policies/</span> pages — all routine, correct exclusions. No misconfiguration found here.</p>
+      </div>
+    </div>
+
+    <div class="finding" data-open="true">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag critical">Root cause</span><h4>290 pages "crawled — currently not indexed"</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body open">
+        <p>This is the bucket that reflects Google's actual quality judgment — and it traces to one structural issue, not weak content.</p>
+        <div class="chart-card" style="margin-top:12px;">
+          <h4>Composition of the 290 URLs</h4>
+          <div class="chart-sub">74% are the same products, duplicated across collection-scoped paths.</div>
+          <div style="position:relative; height:230px;">
+            <canvas id="compChart" role="img" aria-label="Horizontal bar chart: 214 collection-scoped duplicate product URLs, 25 atom feed URLs, 18 direct product URLs with tracking parameters, 17 paginated or filtered collection URLs, 5 likely duplicate product listings, 11 other."></canvas>
+          </div>
+        </div>
+        <p style="margin-top:14px;"><strong>214 of 290 URLs (74%)</strong> are duplicates created by Shopify's internal linking pattern: the same product gets a distinct URL for every collection it's linked from — <span class="mono">/collections/aka/products/x</span>, <span class="mono">/collections/new-arrivals/products/x</span>, <span class="mono">/collections/best-sellers/products/x</span> — instead of always pointing to the clean <span class="mono">/products/x</span>. The canonical tag on the product template is correct, but Google still has to crawl every duplicate path before it can discard it, and it's spending crawl budget there instead of on unique pages.</p>
+        <p><strong>57 unique products</strong> are affected across <strong>30 different collections</strong> — several of which look like inactive seasonal campaigns still generating live, crawlable links.</p>
+        <div class="chart-card" style="margin-top:12px;">
+          <h4>Top collections generating duplicate paths</h4>
+          <div class="chart-sub">Collections with the most duplicate collection-scoped product URLs.</div>
+          <div style="position:relative; height:260px;">
+            <canvas id="collChart" role="img" aria-label="Bar chart of collections generating duplicate product URLs: aka 31, shop-all 23, new-arrivals 23, spring-at-yl-coming-soon 15, preorders 13, aka-tops 12, aka-accessories 11, best-sellers 9."></canvas>
+          </div>
+        </div>
+        <ul>
+          <li>Remaining 76 URLs: 25 auto-generated collection <span class="mono">.atom</span> RSS feeds, 18 product URLs carrying Judge.me review or recommendation-widget tracking parameters, 17 paginated/filtered collection URLs, 5 direct product URLs that look like duplicate or orphaned listings (e.g. <span class="mono">cropped-nylon-patchwork-bomber</span> alongside the very similarly named <span class="mono">delta-red-cropped-nylon-patch-bomber</span>).</li>
+        </ul>
+
+        <div style="background:var(--moss-soft); border-radius:10px; padding:16px 18px; margin-top:16px;">
+          <p style="margin:0; font-size:14px; color:var(--ink-soft);"><strong style="color:var(--moss);">Confirmed by crawl.</strong> A Screaming Frog crawl from the homepage found 21 concrete examples of this exact pattern within a single click of the homepage — all under <span class="mono">/collections/aka/products/...</span> and <span class="mono">/collections/delta-sigma-theta/products/...</span>, each correctly canonicalizing back to <span class="mono">/products/x</span>. This pinpoints the fix: the AKA and DST collection page templates specifically are what's generating the duplicate links.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="technical">
+    <div class="section-head"><span class="section-num">02</span><h2>Technical & Site Speed SEO</h2></div>
+    <p class="section-intro">The platform-level foundation is in good shape, but front-end performance requires immediate attention. We conducted a GTmetrix analysis (Seattle test server, Desktop) to trace the cause of the slow load times.</p>
+
+    <div class="stat-strip" style="margin:24px 0 32px;">
+      <div><strong>D (63%)</strong>GTmetrix Grade</div>
+      <div><strong>8.46 MB</strong>Total Page Payload</div>
+      <div><strong>419</strong>Total Requests</div>
+      <div><strong>13.9s</strong>Fully Loaded Time <span class="target">Target: < 3.0s</span></div>
+      <div><strong>1.3s</strong>Total Blocking Time (TBT) <span class="target">Target: < 150ms</span></div>
+    </div>
+
+    <div class="finding" data-open="true">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag critical">Major Issue</span><h4>Enormous Network Payload & App Bloat (8.46 MB)</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body open">
+        <p>A typical, well-optimized e-commerce homepage sits around 2.5MB to 3MB. YL Studio is downloading <strong>8.46 MB</strong> of data via an astounding <strong>419 HTTP requests</strong>. The majority of this weight is coming from <strong>3.15 MB of JavaScript</strong>.</p>
+        <p>Looking at the waterfall chart, the site is saturated with heavy, unoptimized third-party Shopify apps. The browser is spending 6.8 seconds just trying to execute tasks on the main thread, stalling the page from becoming interactive. The heaviest offenders dragging down the site speed include:</p>
+        <ul>
+          <li>PageFly (multiple sliders, helper, and slideshow scripts)</li>
+          <li>Klaviyo (tracking and embedded forms)</li>
+          <li>AddSauce (Shopify Instagram feed widgets)</li>
+          <li>Hextom / Vimotia (Video widgets)</li>
+          <li>RestockRocket (Back-in-stock notifications)</li>
+        </ul>
+        <p><strong>The Fix:</strong> Audit the Shopify app list immediately. Remove any apps no longer actively driving revenue. For essential apps, work with a developer to conditionally load their scripts (e.g., only load RestockRocket on product pages, not the homepage) or delay their execution until user interaction.</p>
+      </div>
+    </div>
+
+    <div class="finding" data-open="false">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Hero image LCP is being lazy-loaded</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>GTmetrix flagged that the Largest Contentful Paint (LCP) element—the main hero image—is being lazy-loaded. Lazy-loading is great for images further down the page, but telling the browser to delay loading the very first thing the user is supposed to see artificially slows down the perceived load time.</p>
+        <p><strong>The Fix:</strong> Edit the hero banner section in the Shopify theme customization and ensure the first image has <code>loading="eager"</code> or <code>fetchpriority="high"</code> instead of <code>loading="lazy"</code>.</p>
+      </div>
+    </div>
+
+    <div class="finding" data-open="false">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Excessive DOM Size (4,448 elements)</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>The browser has to render and map 4,448 HTML elements on the homepage (Google recommends staying below 1,500). An oversized DOM increases memory usage, causes longer style calculations, and produces costly layout reflows. This is almost certainly a byproduct of PageFly's drag-and-drop page builder architecture, which notoriously wraps elements in deep, nested <code>&lt;div&gt;</code> tags.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px; font-size:19px;">Standard Technical Checks</h3>
+    <table>
+      <tr><th>Area</th><th>Status</th><th>Detail</th></tr>
+      <tr><td>Canonical tags</td><td><span class="tag good">Pass</span></td><td>Self-referencing and correct on homepage and product templates.</td></tr>
+      <tr><td>XML sitemap</td><td><span class="tag good">Pass</span></td><td>Present and submitted at <span class="mono">/sitemap.xml</span>.</td></tr>
+      <tr><td>Structured data</td><td><span class="tag good">Pass</span></td><td>Product, price, and availability Open Graph/schema tags fire correctly.</td></tr>
+      <tr><td>Internal linking / URL sprawl</td><td><span class="tag critical">Fix</span></td><td>214 duplicate collection-scoped product URLs — see Indexation section.</td></tr>
+      <tr><td>Dead seasonal collections still linked</td><td><span class="tag warn">Fix</span></td><td><span class="mono">spring-at-yl-coming-soon</span>, <span class="mono">superbowl-sunday</span>, <span class="mono">fall-preview</span>, <span class="mono">coming-soon</span> generating crawlable duplicate paths.</td></tr>
+      <tr><td>Image alt attributes</td><td><span class="tag critical">Fix</span></td><td>133 images on the homepage alone have no alt attribute — a missed accessibility and image-search signal.</td></tr>
+      <tr><td>Broken links (404s)</td><td><span class="tag good">Pass</span></td><td>Zero genuine 404s found in the Screaming Frog crawl. Every "4xx" in the export was actually a 429 rate-limit response from Shopify's server, not a broken page.</td></tr>
+      <tr><td>Crawl completeness</td><td><span class="tag pending">Rerun needed</span></td><td>The crawl hit Shopify's rate limit after ~53 pages, so it only confirms the first click-depth from the homepage. Rerun with Configuration → Speed → Max URI/s set to 1–2 for a full-depth orphan-page check.</td></tr>
+    </table>
+  </section>
+
+  <section id="onpage">
+    <div class="section-head"><span class="section-num">03</span><h2>On-page SEO</h2></div>
+    <p class="section-intro">Findings pulled directly from live homepage, collection, and product page content, plus a homepage-level Seobility scan.</p>
+
+    <div class="chart-card">
+      <h4>Seobility on-page score — homepage</h4>
+      <div class="chart-sub">67% overall. Links and external factors are pulling the score down the most.</div>
+      <div style="position:relative; height:220px;">
+        <canvas id="scoreChart" role="img" aria-label="Bar chart of Seobility category scores for the homepage: meta data 80%, page structure 91%, server 59%, page quality 54%, external factors 54%, links 25%."></canvas>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag critical">Confirms root cause</span><h4>"Avoid internal links with dynamic URL parameters" — flagged as the top error</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>This was Seobility's highest-priority, error-level flag on the homepage — an independent tool arriving at the same conclusion as the GSC analysis above. Internal links pointing to parameterized or collection-scoped URLs instead of clean canonical ones are the throughline connecting the indexation problem, the Links score (25%, the lowest of any category), and this finding.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>H1 heading is too short and generic</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>The homepage H1 reads "YL STUDIO LLC" — 13 characters, brand-only, below the ~20-character minimum Seobility recommends and carrying no descriptive or keyword value. There are also duplicate heading texts elsewhere on the page. Pairing the brand name with a short descriptor ("YL Studio — Custom Greek Apparel") would fix both the length and the missed keyword opportunity.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>133 homepage images have no alt attribute</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>Confirms the gap flagged in the first pass of this audit. Alt text is skipped across product imagery site-wide, which is common on Shopify since the platform doesn't auto-populate it — but it's a real loss for accessibility and image search, especially on a visually-driven apparel catalog.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Meta description exceeds recommended display width</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>1,519px against a 1,000px maximum — about 50% over. This is the pixel-width version of the truncation issue flagged earlier: the description is long enough that Google cuts it in the SERP snippet regardless of character count. The meta title also has internal word repetition worth tightening.</p>
+      </div>
+    </div>
+
+    <div class="finding" data-open="true">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag critical">Fix</span><h4>DST product pages are titled "AKA" — a template copy-paste bug</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body open">
+        <p>The Screaming Frog crawl caught a concrete mismatch: two Delta Sigma Theta products — <span class="mono">black-dst-varsity-embroidered-patch-tee</span> and <span class="mono">dst-varsity-embroidered-patch-tee</span> — both carry the title <strong>"YL STUDIO GREEK - AKA VARSITY PATCH TEE"</strong>, identical to an actual AKA product's title tag. Separately, a DST short set (<span class="mono">fortitude-signature-short-set</span>) and an AKA short set (<span class="mono">originalpinkset</span>) share the exact same generic title, "YL STUDIO GREEK Original Signature Short Set."</p>
+        <p>This points to a product template being duplicated without the title field getting customized. It's a double problem: DST shoppers searching for DST-specific terms won't match on these titles, and it's a customer-facing accuracy issue on a store where organizational correctness matters to the audience.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Repeated boilerplate text across product pages</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>Seobility found 6 duplicated text blocks on the homepage alone — the "final sale," "colors may differ from actual product," and sizing-disclaimer paragraphs, copied verbatim across listings. Fine as policy language, but worth trimming from the crawlable product description itself (move to a shared, non-duplicated snippet or the size-guide page) so it doesn't dilute unique on-page content site-wide.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Meta descriptions are truncating mid-sentence</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>Product meta descriptions are auto-pulled from the first ~320 characters of body copy rather than hand-written. The AKA Knit Mesh Jersey listing cuts off at <span class="mono">"Height: 5'1""</span> with trailing markup artifacts. This is very likely happening across most of the catalog and is wasting SERP click-through potential on every product page.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Product titles skip buyer-intent keywords</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>Titles like "AKA KNIT MESH JERSEY" are clean but brand-only. Adding descriptive terms shoppers actually search — "sorority jersey," "Alpha Kappa Alpha apparel" (which commands ~2,400+ monthly searches), material or color — is a low-effort long-tail opportunity, especially paired with the authorized-vendor positioning.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag warn">Fix</span><h4>Sold-out inventory dominates prime real estate</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>Multiple homepage-featured and best-selling products are sold out. This isn't an indexation problem, but it hurts dwell time and conversion — both indirect ranking signals — and undercuts the impact of the "crawled, not indexed" fixes once traffic starts arriving.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag good">Working well</span><h4>Reviews, unique copy, and social proof</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body">
+        <p>488+ Judge.me reviews with star ratings surfaced directly in listings, genuinely unique (not manufacturer-boilerplate) product descriptions, and consistent brand voice — these are strong E-E-A-T signals and shouldn't be touched, just protected as the catalog structure gets cleaned up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="offpage">
+    <div class="section-head"><span class="section-num">04</span><h2>Off-page SEO</h2></div>
+    <p class="section-intro">Domain-wide backlink data now confirmed via Moz Pro, layered on top of the homepage-level Seobility numbers.</p>
+
+    <div class="stat-strip" style="margin:0 0 24px;">
+      <div><strong>35</strong>Domain Authority <span class="target">Target: 45+</span></div>
+      <div><strong>97</strong>Linking domains <span class="target">Target: 200+</span></div>
+      <div><strong>339</strong>Inbound links</div>
+      <div><strong>103</strong>Ranking keywords</div>
+      <div><strong>–8</strong>Net linking domains, 60 days <span class="target">Target: Positive growth</span></div>
+    </div>
+
+    <div class="finding" data-open="true">
+      <div class="finding-head" onclick="toggleFinding(this)">
+        <div class="finding-title"><span class="tag critical">Investigate</span><h4>Some top "backlinks" look like spam artifacts, not editorial links</h4></div>
+        <span class="caret">▸</span>
+      </div>
+      <div class="finding-body open">
+        <p>Moz's link data raises a flag beyond "thin backlinks." Several of the highest-authority referring pages read as spam-forum injections rather than genuine mentions — a Cornell University subdomain forum post (<span class="mono">yambase-test.sgn.cornell.edu/forum/add_post.pl...</span>) and multiple <span class="mono">accounts.cancer.org</span> login-redirect URLs that reference the domain in a query parameter rather than linking to it editorially.</p>
+        <p>More notable: Moz's "Top pages on this site" list includes a <strong>Russian-language URL</strong> (<span class="mono">ylstudiogreek.com/список-записей-обновляемый/</span>, roughly "list of updated records") and a page with an opaque encoded query string, both carrying real Page Authority and repeated anchor text pointing to them. A foreign-language slug appearing on an English apparel storefront is a common signature of either a compromised/injected page or a spam redirect exploiting the domain. Also worth a look: <span class="mono">www.www.ylstudiogreek.com</span> shows up as an indexed page variant, which points to a possible redirect misconfiguration.</p>
+        <p><strong>Recommended next step:</strong> check the site directly for that Russian-language URL and the malformed <span class="mono">www.www.</span> variant, and if either resolves to real (unauthorized) content, treat it as a security issue first — clean it up, then follow with a Google disavow file for the spam-forum links once confirmed they aren't providing any value.</p>
+      </div>
+    </div>
+
+    <table>
+      <tr><th>Area</th><th>Status</th><th>Detail</th></tr>
+      <tr><td>Domain Authority</td><td><span class="tag warn">Baseline</span></td><td>35/100 — a starting point to track against as fixes roll out, not alarming on its own for a store this size.</td></tr>
+      <tr><td>Link trend</td><td><span class="tag critical">Fix</span></td><td>Only 2 new linking domains discovered vs. 10 lost in the last 60 days — a declining trend that predates this audit.</td></tr>
+      <tr><td>Follow/nofollow mix</td><td><span class="tag good">Pass</span></td><td>100% of internal links are followed; 89.1% of external links are followed, 10.9% nofollow — a normal, healthy ratio.</td></tr>
+      <tr><td>Anchor text distribution</td><td><span class="tag good">Pass</span></td><td>Dominated by bare-URL and brand-name anchors — no manipulative exact-match anchor pattern, aside from the spam URL noted above.</td></tr>
+      <tr><td>Social presence</td><td><span class="tag good">Pass</span></td><td>Consistent @ylstudiogreek handle across Instagram, Facebook, TikTok, linked from every page footer.</td></tr>
+      <tr><td>Authority positioning</td><td><span class="tag warn">Opportunity</span></td><td>Authorized-vendor status with AKA, DST, and Jack and Jill of America is a strong, underused hook for outreach to chapter blogs, HBCU media, and Greek-life influencers — genuine editorial links here would meaningfully move a Domain Authority of 35.</td></tr>
+      <tr><td>Brand mention capture</td><td><span class="tag pending">Pending</span></td><td>Set up Google Alerts for "YL Studio Greek" to catch unlinked mentions worth converting to links.</td></tr>
+      <tr><td>Sister brand cross-link</td><td><span class="tag good">Pass</span></td><td>Footer link to leogarnette.com reads as a legitimate co-owned brand reference, not a manipulative link.</td></tr>
+    </table>
+  </section>
+
+  <section id="plan">
+    <div class="section-head"><span class="section-num">05</span><h2>Priority action plan</h2></div>
+    <p class="section-intro">Ordered by impact on the indexation and performance problems. Check items off as you work through them.</p>
+
+    <div class="chart-card" style="padding-top:8px;">
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Re-point internal links to canonical product URLs</div>
+          <div class="action-desc">Update the theme's product grid snippet (e.g., <code>product-grid-item.liquid</code>) and change <code>{{ product.url | within: collection }}</code> to <code>{{ product.url }}</code>. Fixes 214 duplicate URLs at the source. Note: This will decouple Shopify's default breadcrumb tracking, so a custom breadcrumb snippet may be required to retain navigation context.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">High</span></div>
+        <div class="badge-col">Effort<span class="val">Medium</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Audit and remove bloated Shopify apps</div>
+          <div class="action-desc">The site is downloading 8.46MB of data across 419 HTTP requests. Remove inactive apps and conditionally load essential ones (Klaviyo, PageFly, AddSauce, Vimotia) to clear up the 1.3s of main-thread blocking time.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">High</span></div>
+        <div class="badge-col">Effort<span class="val">High</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Disable lazy-loading on the hero image</div>
+          <div class="action-desc">Ensure the primary hero image loads instantly by replacing <code>loading="lazy"</code> with <code>loading="eager"</code> or <code>fetchpriority="high"</code> in the theme customization.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">High</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Unpublish or archive dead seasonal collections</div>
+          <div class="action-desc"><span class="mono">spring-at-yl-coming-soon</span>, <span class="mono">superbowl-sunday</span>, <span class="mono">fall-preview</span>, <span class="mono">coming-soon</span> — removes their duplicate paths entirely.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">High</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Block tracking-parameter and .atom URLs in robots.txt</div>
+          <div class="action-desc">Add disallow rules for Judge.me/recommendation-widget parameters and collection <span class="mono">.atom</span> feeds, matching the pattern already used for filter URLs.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Medium</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Write custom meta descriptions for top products</div>
+          <div class="action-desc">Start with best-sellers and homepage-featured items to stop mid-sentence truncation in search snippets.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Medium</span></div>
+        <div class="badge-col">Effort<span class="val">Medium</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Review the 5 suspected duplicate product listings</div>
+          <div class="action-desc">Consolidate or 301-redirect <span class="mono">cropped-nylon-patchwork-bomber</span>, <span class="mono">dark-blue-washed-jack-and-jill-graphic-tee-copy</span>, and similar near-duplicates.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Low</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Investigate the Russian-language URL and www.www. domain variant</div>
+          <div class="action-desc">Confirm whether <span class="mono">/список-записей-обновляемый/</span> and <span class="mono">www.www.ylstudiogreek.com</span> resolve to real content. If either is unauthorized, treat as a security issue first, then disavow the associated spam-forum backlinks.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">High</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Fix the DST/AKA title tag mix-up</div>
+          <div class="action-desc">At least 3 product pairs share mismatched or duplicate title tags across the AKA and DST lines — confirmed via crawl. Audit the product template for other copy-pasted, uncustomized titles while in there.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Medium</span></div>
+        <div class="badge-col">Effort<span class="val">Low</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Pitch chapter/HBCU outreach to reverse the link-loss trend</div>
+          <div class="action-desc">Domain Authority 35, and losing more linking domains than gaining (–8 net in 60 days). Use the authorized-vendor status as the hook for Greek-life media and chapter blog placements.</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Medium</span></div>
+        <div class="badge-col">Effort<span class="val">Medium</span></div>
+      </div>
+      <div class="action-row">
+        <input type="checkbox" onchange="toggleDone(this)">
+        <div>
+          <div class="action-title">Add alt text to product images and rewrite the H1</div>
+          <div class="action-desc">133 images with no alt attribute on the homepage alone. Pair with a fuller, keyword-carrying H1 in place of the current 13-character "YL STUDIO LLC."</div>
+        </div>
+        <div class="badge-col">Impact<span class="val">Low</span></div>
+        <div class="badge-col">Effort<span class="val">Medium</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding-left:0; padding-right:0;">
+      Compiled from live site data (homepage, product, and collection page fetches), the site's live robots.txt, four Google Search Console exports covering May 4 – Jul 24, 2026 (Pages report, Chart export, Critical/Non-critical issues, and URL-level exports for the noindex and crawled-not-indexed buckets), a Seobility SEO Checker scan of the homepage, a GTmetrix Desktop Performance Report (Aug 1, 2026), a Moz Pro domain-wide link report, and a Screaming Frog crawl (partial — rate-limited by the server after exactly 53 pages; rerun recommended at reduced speed for full orphan-page coverage).
+    </div>
+  </footer>
+</div>
+
+<script>
+  function toggleFinding(headEl){
+    const card = headEl.parentElement;
+    const body = card.querySelector('.finding-body');
+    body.classList.toggle('open');
+    card.classList.toggle('expanded');
+  }
+  function toggleDone(cb){
+    const row = cb.closest('.action-row');
+    row.classList.toggle('done', cb.checked);
+  }
+
+  const inkSlate = '#6B7080';
+  const gridColor = '#E4E1D6';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.color = inkSlate;
+
+  // Gauge (doughnut)
+  new Chart(document.getElementById('gaugeChart'), {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [11.2, 88.8],
+        backgroundColor: ['#C1502E', '#EEEDE8'],
+        borderWidth: 0,
+        cutout: '78%'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      circumference: 360,
+      plugins: { legend: { display:false }, tooltip: { enabled:false } }
+    }
+  });
+
+  // Index rate trend
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: ['May 4','May 11','May 18','May 25','Jun 1','Jun 8','Jun 15','Jun 22','Jun 29','Jul 6','Jul 13','Jul 20'],
+      datasets: [{
+        data: [7.1,7.5,8.8,10.2,10.2,10.3,10.8,10.8,10.8,11.0,11.2,11.2],
+        borderColor: '#2A5CAA',
+        backgroundColor: 'rgba(42,92,170,0.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: '#2A5CAA',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display:false } },
+      scales: {
+        x: { grid: { display:false }, ticks: { maxRotation:0, autoSkip:true, maxTicksLimit:7 } },
+        y: { grid: { color: gridColor }, ticks: { callback:(v)=>v+'%' }, suggestedMin:0, suggestedMax:14 }
+      }
+    }
+  });
+
+  // Composition of crawled-not-indexed
+  new Chart(document.getElementById('compChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Collection-scoped duplicate product URLs','Atom feed URLs','Direct product URLs w/ tracking params','Paginated / filtered collection URLs','Direct product URLs (likely dupes)','Other / misc'],
+      datasets: [{
+        data: [214,25,18,17,5,11],
+        backgroundColor: ['#C1502E','#2A5CAA','#2A5CAA','#2A5CAA','#2A5CAA','#2A5CAA'],
+        borderRadius: 4,
+        barThickness: 18
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display:false } },
+      scales: {
+        x: { grid: { color: gridColor } },
+        y: { grid: { display:false }, ticks: { font:{ size:11.5 } } }
+      }
+    }
+  });
+
+  // Seobility on-page score breakdown
+  new Chart(document.getElementById('scoreChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Page structure','Meta data','Server','Page quality','External factors','Links'],
+      datasets: [{
+        data: [91,80,59,54,54,25],
+        backgroundColor: ['#2A5CAA','#2A5CAA','#B8790B','#B8790B','#B8790B','#C1502E'],
+        borderRadius: 4,
+        barThickness: 18
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display:false } },
+      scales: {
+        x: { grid: { color: gridColor }, suggestedMax: 100, ticks: { callback:(v)=>v+'%' } },
+        y: { grid: { display:false }, ticks: { font:{ size:11.5 } } }
+      }
+    }
+  });
+
+  // Top collections
+  new Chart(document.getElementById('collChart'), {
+    type: 'bar',
+    data: {
+      labels: ['aka','shop-all','new-arrivals','spring-at-yl-coming-soon','preorders','aka-tops','aka-accessories','best-sellers'],
+      datasets: [{
+        data: [31,23,23,15,13,12,11,9],
+        backgroundColor: '#2A5CAA',
+        borderRadius: 4,
+        barThickness: 18
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display:false } },
+      scales: {
+        x: { grid: { color: gridColor } },
+        y: { grid: { display:false }, ticks: { font:{ size:11.5 } } }
+      }
+    }
+  });
+</script>
+</body>
+</html>
