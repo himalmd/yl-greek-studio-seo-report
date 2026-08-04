@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEO Audit — YL Studio Greek</title>
+<title>SEO Audit - YL Studio Greek</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -262,6 +262,37 @@
     .hero h1{font-size:32px;}
   }
 
+  /* Interactivity & Hover Effects */
+  .pillar, .chart-card, .gauge-card, .metric-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .pillar:hover, .chart-card:hover, .gauge-card:hover, .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+  .print-btn {
+    background: var(--ink); color: var(--paper); border: none; 
+    padding: 6px 14px; border-radius: 6px; font-size: 13px; 
+    font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; 
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .print-btn:hover {
+    background: var(--ink-soft);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .print-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+  .hero-img-wrap {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hero-img-wrap:hover {
+    transform: scale(1.005);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08) !important;
+  }
+
   /* Print Support */
   @media print {
     body { background: #fff; color: #000; }
@@ -293,23 +324,23 @@
       <a href="#offpage">Off-page</a>
       <a href="#plan">Action plan</a>
     </nav>
-    <button class="print-btn" onclick="window.print()" style="background: var(--ink); color: var(--paper); border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Print PDF</button>
+    <button class="print-btn" onclick="window.print()">Print PDF</button>
   </div>
 </div>
 
 <div class="wrap">
   <section class="hero" id="summary">
-    <div style="margin-bottom: 32px; border-radius: 12px; overflow: hidden; border: 1px solid var(--hairline);">
+    <div class="hero-img-wrap" style="margin-bottom: 32px; border-radius: 12px; overflow: hidden; border: 1px solid var(--hairline); box-shadow: 0 4px 24px rgba(0,0,0,0.04);">
       <img src="assets/yl-studio-thumbnail.webp" alt="YL Studio Greek SEO Report" style="width: 100%; height: auto; display: block;" />
     </div>
-    <div class="eyebrow">SEO audit report — ylstudiogreek.com</div>
+    <div class="eyebrow">SEO audit report - ylstudiogreek.com</div>
     <h1 style="margin-bottom: 16px;">Comprehensive SEO Audit</h1>
     <div style="font-size: 24px; font-family: 'Newsreader', serif; font-weight: 500; color: var(--ink); line-height: 1.25; max-width: 760px; margin-bottom: 20px;">A strong foundation ready for technical cleanup.</div>
-    <p class="sub" style="margin-top:0;">YL Studio has excellent on-page social proof and brand demand — 488+ reviews, five-star ratings, and authorized-vendor status with three major sororities — but a high volume of duplicate URLs and third-party app scripts are currently creating crawl bloat and performance drag. This report outlines how to clean up that technical noise so search engines focus strictly on your primary product catalog.</p>
+    <p class="sub" style="margin-top:0;">YL Studio has excellent on-page social proof and brand demand - 488+ reviews, five-star ratings, and authorized-vendor status with three major sororities - but a high volume of duplicate URLs and third-party app scripts are currently creating crawl bloat and performance drag. This report outlines how to clean up that technical noise so search engines focus strictly on your primary product catalog.</p>
     <div class="meta-row">
       <div class="meta-item"><strong>Aug 1, 2026</strong>Report date</div>
       <div class="meta-item"><strong>Search Console & GTmetrix</strong>Primary data sources</div>
-      <div class="meta-item"><strong>May 4 – Jul 24, 2026</strong>GSC Analysis window</div>
+      <div class="meta-item"><strong>May 4 - Jul 24, 2026</strong>GSC Analysis window</div>
       <div class="meta-item"><strong>Shopify</strong>Platform</div>
     </div>
 
@@ -339,7 +370,7 @@
 
   <section id="indexation">
     <div class="section-head"><span class="section-num">01</span><h2>Indexation health</h2></div>
-    <p class="section-intro">Google Search Console shows 1,643 known URLs on the site. This is the single biggest lever in the audit — everything else (copy, links, authority) is wasted effort on pages Google won't show.</p>
+    <p class="section-intro">Google Search Console shows 1,643 known URLs on the site. This is the single biggest lever in the audit - everything else (copy, links, authority) is wasted effort on pages Google won't show.</p>
 
     <div class="gauge-card">
       <div class="gauge-wrap">
@@ -348,7 +379,7 @@
       </div>
       <div class="gauge-copy">
         <h3>184 of 1,643 known pages are indexed</h3>
-        <p>That leaves 1,459 pages Google knows about but won't show in search. The good news is that the core catalog is largely safe within those 184 pages—the low percentage is primarily caused by thousands of duplicate URLs artificially inflating the total page count.</p>
+        <p>That leaves 1,459 pages Google knows about but won't show in search. The good news is that the core catalog is largely safe within those 184 pages-the low percentage is primarily caused by thousands of duplicate URLs artificially inflating the total page count.</p>
         <div class="stat-strip">
           <div><strong>1,643</strong>Known pages</div>
           <div><strong>184</strong>Indexed <span class="target">Target: ~1,100+</span></div>
@@ -360,7 +391,7 @@
 
     <div class="chart-card">
       <h4>Index rate over time</h4>
-      <div class="chart-sub">Weekly indexed-page ratio, May 4 – Jul 24, 2026. Trending up, but off a very low base.</div>
+      <div class="chart-sub">Weekly indexed-page ratio, May 4 - Jul 24, 2026. Trending up, but off a very low base.</div>
       <div style="position:relative; height:220px;">
         <canvas id="trendChart" role="img" aria-label="Line chart of index rate percentage rising from 7.1% on May 4 to 11.2% by July 24, 2026, showing a plateau since mid June."></canvas>
       </div>
@@ -375,8 +406,8 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>We exported the full URL list. <strong>339 of 340</strong> are <span class="mono">/services/login_with_shop/authorize</span> links — Shop Pay's login pre-qualification flow, which generates a fresh tracking ID on every load and is correctly auto-noindexed by Shopify. This is not a bug.</p>
-        <p>The one real product on the list, <span class="mono">rho-pi-group-order-aka-knit-mesh-jersey</span>, is worth a manual check — it looks like an unlisted "group order" link meant to be shared directly rather than surfaced in search, which is likely intentional.</p>
+        <p>We exported the full URL list. <strong>339 of 340</strong> are <span class="mono">/services/login_with_shop/authorize</span> links - Shop Pay's login pre-qualification flow, which generates a fresh tracking ID on every load and is correctly auto-noindexed by Shopify. This is not a bug.</p>
+        <p>The one real product on the list, <span class="mono">rho-pi-group-order-aka-knit-mesh-jersey</span>, is worth a manual check - it looks like an unlisted "group order" link meant to be shared directly rather than surfaced in search, which is likely intentional.</p>
       </div>
     </div>
 
@@ -386,17 +417,17 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>The live robots.txt is essentially Shopify's stock file. It blocks collection sort/filter-combination URLs, cart, checkout, account, search, and the auto-generated <span class="mono">/policies/</span> pages — all routine, correct exclusions. No misconfiguration found here.</p>
+        <p>The live robots.txt is essentially Shopify's stock file. It blocks collection sort/filter-combination URLs, cart, checkout, account, search, and the auto-generated <span class="mono">/policies/</span> pages - all routine, correct exclusions. No misconfiguration found here.</p>
       </div>
     </div>
 
     <div class="finding" data-open="true">
       <div class="finding-head" onclick="toggleFinding(this)">
-        <div class="finding-title"><span class="tag critical">Root cause</span><h4>290 pages "crawled — currently not indexed"</h4></div>
+        <div class="finding-title"><span class="tag critical">Root cause</span><h4>290 pages "crawled - currently not indexed"</h4></div>
         <span class="caret">▸</span>
       </div>
       <div class="finding-body open">
-        <p>This is the bucket that reflects Google's actual quality judgment — and it traces to one structural issue, not weak content.</p>
+        <p>This is the bucket that reflects Google's actual quality judgment - and it traces to one structural issue, not weak content.</p>
         <div class="chart-card" style="margin-top:12px;">
           <h4>Composition of the 290 URLs</h4>
           <div class="chart-sub">74% are the same products, duplicated across collection-scoped paths.</div>
@@ -404,8 +435,8 @@
             <canvas id="compChart" role="img" aria-label="Horizontal bar chart: 214 collection-scoped duplicate product URLs, 25 atom feed URLs, 18 direct product URLs with tracking parameters, 17 paginated or filtered collection URLs, 5 likely duplicate product listings, 11 other."></canvas>
           </div>
         </div>
-        <p style="margin-top:14px;"><strong>214 of 290 URLs (74%)</strong> are duplicates created by Shopify's internal linking pattern: the same product gets a distinct URL for every collection it's linked from — <span class="mono">/collections/aka/products/x</span>, <span class="mono">/collections/new-arrivals/products/x</span>, <span class="mono">/collections/best-sellers/products/x</span> — instead of always pointing to the clean <span class="mono">/products/x</span>. The canonical tag on the product template is correct, but Google still has to crawl every duplicate path before it can discard it, and it's spending crawl budget there instead of on unique pages.</p>
-        <p><strong>57 unique products</strong> are affected across <strong>30 different collections</strong> — several of which look like inactive seasonal campaigns still generating live, crawlable links.</p>
+        <p style="margin-top:14px;"><strong>214 of 290 URLs (74%)</strong> are duplicates created by Shopify's internal linking pattern: the same product gets a distinct URL for every collection it's linked from - <span class="mono">/collections/aka/products/x</span>, <span class="mono">/collections/new-arrivals/products/x</span>, <span class="mono">/collections/best-sellers/products/x</span> - instead of always pointing to the clean <span class="mono">/products/x</span>. The canonical tag on the product template is correct, but Google still has to crawl every duplicate path before it can discard it, and it's spending crawl budget there instead of on unique pages.</p>
+        <p><strong>57 unique products</strong> are affected across <strong>30 different collections</strong> - several of which look like inactive seasonal campaigns still generating live, crawlable links.</p>
         <div class="chart-card" style="margin-top:12px;">
           <h4>Top collections generating duplicate paths</h4>
           <div class="chart-sub">Collections with the most duplicate collection-scoped product URLs.</div>
@@ -418,7 +449,7 @@
         </ul>
 
         <div style="background:var(--moss-soft); border-radius:10px; padding:16px 18px; margin-top:16px;">
-          <p style="margin:0; font-size:14px; color:var(--ink-soft);"><strong style="color:var(--moss);">Confirmed by crawl.</strong> A Screaming Frog crawl from the homepage found 21 concrete examples of this exact pattern within a single click of the homepage — all under <span class="mono">/collections/aka/products/...</span> and <span class="mono">/collections/delta-sigma-theta/products/...</span>, each correctly canonicalizing back to <span class="mono">/products/x</span>. This pinpoints the fix: the AKA and DST collection page templates specifically are what's generating the duplicate links.</p>
+          <p style="margin:0; font-size:14px; color:var(--ink-soft);"><strong style="color:var(--moss);">Confirmed by crawl.</strong> A Screaming Frog crawl from the homepage found 21 concrete examples of this exact pattern within a single click of the homepage - all under <span class="mono">/collections/aka/products/...</span> and <span class="mono">/collections/delta-sigma-theta/products/...</span>, each correctly canonicalizing back to <span class="mono">/products/x</span>. This pinpoints the fix: the AKA and DST collection page templates specifically are what's generating the duplicate links.</p>
         </div>
       </div>
     </div>
@@ -470,7 +501,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>GTmetrix flagged that the Largest Contentful Paint (LCP) element—the main hero image—is being lazy-loaded. Lazy-loading is great for images further down the page, but telling the browser to delay loading the very first thing the user is supposed to see artificially slows down the perceived load time.</p>
+        <p>GTmetrix flagged that the Largest Contentful Paint (LCP) element-the main hero image-is being lazy-loaded. Lazy-loading is great for images further down the page, but telling the browser to delay loading the very first thing the user is supposed to see artificially slows down the perceived load time.</p>
         <p><strong>The Fix:</strong> Edit the hero banner section in the Shopify theme customization and ensure the first image has <code>loading="eager"</code> or <code>fetchpriority="high"</code> instead of <code>loading="lazy"</code>.</p>
       </div>
     </div>
@@ -491,11 +522,11 @@
       <tr><td>Canonical tags</td><td><span class="tag good">Pass</span></td><td>Self-referencing and correct on homepage and product templates.</td></tr>
       <tr><td>XML sitemap</td><td><span class="tag good">Pass</span></td><td>Present and submitted at <span class="mono">/sitemap.xml</span>.</td></tr>
       <tr><td>Structured data</td><td><span class="tag good">Pass</span></td><td>Product, price, and availability Open Graph/schema tags fire correctly.</td></tr>
-      <tr><td>Internal linking / URL sprawl</td><td><span class="tag critical">Fix</span></td><td>214 duplicate collection-scoped product URLs — see Indexation section.</td></tr>
+      <tr><td>Internal linking / URL sprawl</td><td><span class="tag critical">Fix</span></td><td>214 duplicate collection-scoped product URLs - see Indexation section.</td></tr>
       <tr><td>Dead seasonal collections still linked</td><td><span class="tag warn">Fix</span></td><td><span class="mono">spring-at-yl-coming-soon</span>, <span class="mono">superbowl-sunday</span>, <span class="mono">fall-preview</span>, <span class="mono">coming-soon</span> generating crawlable duplicate paths.</td></tr>
-      <tr><td>Image alt attributes</td><td><span class="tag critical">Fix</span></td><td>133 images on the homepage alone have no alt attribute — a missed accessibility and image-search signal.</td></tr>
+      <tr><td>Image alt attributes</td><td><span class="tag critical">Fix</span></td><td>133 images on the homepage alone have no alt attribute - a missed accessibility and image-search signal.</td></tr>
       <tr><td>Broken links (404s)</td><td><span class="tag good">Pass</span></td><td>Zero genuine 404s found in the Screaming Frog crawl. Every "4xx" in the export was actually a 429 rate-limit response from Shopify's server, not a broken page.</td></tr>
-      <tr><td>Crawl completeness</td><td><span class="tag pending">Rerun needed</span></td><td>The crawl hit Shopify's rate limit after ~53 pages, so it only confirms the first click-depth from the homepage. Rerun with Configuration → Speed → Max URI/s set to 1–2 for a full-depth orphan-page check.</td></tr>
+      <tr><td>Crawl completeness</td><td><span class="tag pending">Rerun needed</span></td><td>The crawl hit Shopify's rate limit after ~53 pages, so it only confirms the first click-depth from the homepage. Rerun with Configuration → Speed → Max URI/s set to 1-2 for a full-depth orphan-page check.</td></tr>
     </table>
   </section>
 
@@ -504,7 +535,7 @@
     <p class="section-intro">Findings pulled directly from live homepage, collection, and product page content, plus a homepage-level Seobility scan.</p>
 
     <div class="chart-card">
-      <h4>Seobility on-page score — homepage</h4>
+      <h4>Seobility on-page score - homepage</h4>
       <div class="chart-sub">67% overall. Links and external factors are pulling the score down the most.</div>
       <div style="position:relative; height:220px;">
         <canvas id="scoreChart" role="img" aria-label="Bar chart of Seobility category scores for the homepage: meta data 80%, page structure 91%, server 59%, page quality 54%, external factors 54%, links 25%."></canvas>
@@ -513,11 +544,11 @@
 
     <div class="finding">
       <div class="finding-head" onclick="toggleFinding(this)">
-        <div class="finding-title"><span class="tag critical">Confirms root cause</span><h4>"Avoid internal links with dynamic URL parameters" — flagged as the top error</h4></div>
+        <div class="finding-title"><span class="tag critical">Confirms root cause</span><h4>"Avoid internal links with dynamic URL parameters" - flagged as the top error</h4></div>
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>This was Seobility's highest-priority, error-level flag on the homepage — an independent tool arriving at the same conclusion as the GSC analysis above. Internal links pointing to parameterized or collection-scoped URLs instead of clean canonical ones are the throughline connecting the indexation problem, the Links score (25%, the lowest of any category), and this finding.</p>
+        <p>This was Seobility's highest-priority, error-level flag on the homepage - an independent tool arriving at the same conclusion as the GSC analysis above. Internal links pointing to parameterized or collection-scoped URLs instead of clean canonical ones are the throughline connecting the indexation problem, the Links score (25%, the lowest of any category), and this finding.</p>
       </div>
     </div>
 
@@ -527,7 +558,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>The homepage H1 reads "YL STUDIO LLC" — 13 characters, brand-only, below the ~20-character minimum Seobility recommends and carrying no descriptive or keyword value. There are also duplicate heading texts elsewhere on the page. Pairing the brand name with a short descriptor ("YL Studio — Custom Greek Apparel") would fix both the length and the missed keyword opportunity.</p>
+        <p>The homepage H1 reads "YL STUDIO LLC" - 13 characters, brand-only, below the ~20-character minimum Seobility recommends and carrying no descriptive or keyword value. There are also duplicate heading texts elsewhere on the page. Pairing the brand name with a short descriptor ("YL Studio - Custom Greek Apparel") would fix both the length and the missed keyword opportunity.</p>
       </div>
     </div>
 
@@ -537,7 +568,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>Confirms the gap flagged in the first pass of this audit. Alt text is skipped across product imagery site-wide, which is common on Shopify since the platform doesn't auto-populate it — but it's a real loss for accessibility and image search, especially on a visually-driven apparel catalog.</p>
+        <p>Confirms the gap flagged in the first pass of this audit. Alt text is skipped across product imagery site-wide, which is common on Shopify since the platform doesn't auto-populate it - but it's a real loss for accessibility and image search, especially on a visually-driven apparel catalog.</p>
       </div>
     </div>
 
@@ -547,17 +578,17 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>1,519px against a 1,000px maximum — about 50% over. This is the pixel-width version of the truncation issue flagged earlier: the description is long enough that Google cuts it in the SERP snippet regardless of character count. The meta title also has internal word repetition worth tightening.</p>
+        <p>1,519px against a 1,000px maximum - about 50% over. This is the pixel-width version of the truncation issue flagged earlier: the description is long enough that Google cuts it in the SERP snippet regardless of character count. The meta title also has internal word repetition worth tightening.</p>
       </div>
     </div>
 
     <div class="finding" data-open="true">
       <div class="finding-head" onclick="toggleFinding(this)">
-        <div class="finding-title"><span class="tag critical">Fix</span><h4>DST product pages are titled "AKA" — a template copy-paste bug</h4></div>
+        <div class="finding-title"><span class="tag critical">Fix</span><h4>DST product pages are titled "AKA" - a template copy-paste bug</h4></div>
         <span class="caret">▸</span>
       </div>
       <div class="finding-body open">
-        <p>The Screaming Frog crawl caught a concrete mismatch: two Delta Sigma Theta products — <span class="mono">black-dst-varsity-embroidered-patch-tee</span> and <span class="mono">dst-varsity-embroidered-patch-tee</span> — both carry the title <strong>"YL STUDIO GREEK - AKA VARSITY PATCH TEE"</strong>, identical to an actual AKA product's title tag. Separately, a DST short set (<span class="mono">fortitude-signature-short-set</span>) and an AKA short set (<span class="mono">originalpinkset</span>) share the exact same generic title, "YL STUDIO GREEK Original Signature Short Set."</p>
+        <p>The Screaming Frog crawl caught a concrete mismatch: two Delta Sigma Theta products - <span class="mono">black-dst-varsity-embroidered-patch-tee</span> and <span class="mono">dst-varsity-embroidered-patch-tee</span> - both carry the title <strong>"YL STUDIO GREEK - AKA VARSITY PATCH TEE"</strong>, identical to an actual AKA product's title tag. Separately, a DST short set (<span class="mono">fortitude-signature-short-set</span>) and an AKA short set (<span class="mono">originalpinkset</span>) share the exact same generic title, "YL STUDIO GREEK Original Signature Short Set."</p>
         <p>This points to a product template being duplicated without the title field getting customized. It's a double problem: DST shoppers searching for DST-specific terms won't match on these titles, and it's a customer-facing accuracy issue on a store where organizational correctness matters to the audience.</p>
       </div>
     </div>
@@ -568,7 +599,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>Seobility found 6 duplicated text blocks on the homepage alone — the "final sale," "colors may differ from actual product," and sizing-disclaimer paragraphs, copied verbatim across listings. Fine as policy language, but worth trimming from the crawlable product description itself (move to a shared, non-duplicated snippet or the size-guide page) so it doesn't dilute unique on-page content site-wide.</p>
+        <p>Seobility found 6 duplicated text blocks on the homepage alone - the "final sale," "colors may differ from actual product," and sizing-disclaimer paragraphs, copied verbatim across listings. Fine as policy language, but worth trimming from the crawlable product description itself (move to a shared, non-duplicated snippet or the size-guide page) so it doesn't dilute unique on-page content site-wide.</p>
       </div>
     </div>
 
@@ -588,7 +619,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>Titles like "AKA KNIT MESH JERSEY" are clean but brand-only. Adding descriptive terms shoppers actually search — "sorority jersey," "Alpha Kappa Alpha apparel" (which commands ~2,400+ monthly searches), material or color — is a low-effort long-tail opportunity, especially paired with the authorized-vendor positioning.</p>
+        <p>Titles like "AKA KNIT MESH JERSEY" are clean but brand-only. Adding descriptive terms shoppers actually search - "sorority jersey," "Alpha Kappa Alpha apparel" (which commands ~2,400+ monthly searches), material or color - is a low-effort long-tail opportunity, especially paired with the authorized-vendor positioning.</p>
       </div>
     </div>
 
@@ -598,7 +629,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>Multiple homepage-featured and best-selling products are sold out. This isn't an indexation problem, but it hurts dwell time and conversion — both indirect ranking signals — and undercuts the impact of the "crawled, not indexed" fixes once traffic starts arriving.</p>
+        <p>Multiple homepage-featured and best-selling products are sold out. This isn't an indexation problem, but it hurts dwell time and conversion - both indirect ranking signals - and undercuts the impact of the "crawled, not indexed" fixes once traffic starts arriving.</p>
       </div>
     </div>
 
@@ -608,7 +639,7 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body">
-        <p>488+ Judge.me reviews with star ratings surfaced directly in listings, genuinely unique (not manufacturer-boilerplate) product descriptions, and consistent brand voice — these are strong E-E-A-T signals and shouldn't be touched, just protected as the catalog structure gets cleaned up.</p>
+        <p>488+ Judge.me reviews with star ratings surfaced directly in listings, genuinely unique (not manufacturer-boilerplate) product descriptions, and consistent brand voice - these are strong E-E-A-T signals and shouldn't be touched, just protected as the catalog structure gets cleaned up.</p>
       </div>
     </div>
   </section>
@@ -622,7 +653,7 @@
       <div class="metric-card warn"><strong>97</strong><div class="metric-label">Linking domains <span class="target">Target: 200+</span></div></div>
       <div class="metric-card"><strong>339</strong><div class="metric-label">Inbound links</div></div>
       <div class="metric-card"><strong>103</strong><div class="metric-label">Ranking keywords</div></div>
-      <div class="metric-card critical"><strong>–8</strong><div class="metric-label">Net linking domains <span class="target">Target: Positive growth</span></div></div>
+      <div class="metric-card critical"><strong>-8</strong><div class="metric-label">Net linking domains <span class="target">Target: Positive growth</span></div></div>
     </div>
 
     <div class="finding" data-open="true">
@@ -631,9 +662,9 @@
         <span class="caret">▸</span>
       </div>
       <div class="finding-body open">
-        <p>Moz's link data raises a flag beyond "thin backlinks." Several of the highest-authority referring pages read as spam-forum injections rather than genuine mentions — a Cornell University subdomain forum post (<span class="mono">yambase-test.sgn.cornell.edu/forum/add_post.pl...</span>) and multiple <span class="mono">accounts.cancer.org</span> login-redirect URLs that reference the domain in a query parameter rather than linking to it editorially.</p>
+        <p>Moz's link data raises a flag beyond "thin backlinks." Several of the highest-authority referring pages read as spam-forum injections rather than genuine mentions - a Cornell University subdomain forum post (<span class="mono">yambase-test.sgn.cornell.edu/forum/add_post.pl...</span>) and multiple <span class="mono">accounts.cancer.org</span> login-redirect URLs that reference the domain in a query parameter rather than linking to it editorially.</p>
         <p>More notable: Moz's "Top pages on this site" list includes a <strong>Russian-language URL</strong> (<span class="mono">ylstudiogreek.com/список-записей-обновляемый/</span>, roughly "list of updated records") and a page with an opaque encoded query string, both carrying real Page Authority and repeated anchor text pointing to them. A foreign-language slug appearing on an English apparel storefront is a common signature of either a compromised/injected page or a spam redirect exploiting the domain. Also worth a look: <span class="mono">www.www.ylstudiogreek.com</span> shows up as an indexed page variant, which points to a possible redirect misconfiguration.</p>
-        <p><strong>Recommended next step:</strong> check the site directly for that Russian-language URL and the malformed <span class="mono">www.www.</span> variant, and if either resolves to real (unauthorized) content, treat it as a security issue first — clean it up, then follow with a Google disavow file for the spam-forum links once confirmed they aren't providing any value.</p>
+        <p><strong>Recommended next step:</strong> check the site directly for that Russian-language URL and the malformed <span class="mono">www.www.</span> variant, and if either resolves to real (unauthorized) content, treat it as a security issue first - clean it up, then follow with a Google disavow file for the spam-forum links once confirmed they aren't providing any value.</p>
       </div>
     </div>
 
@@ -656,12 +687,12 @@
 
     <table>
       <tr><th>Area</th><th>Status</th><th>Detail</th></tr>
-      <tr><td>Domain Authority</td><td><span class="tag warn">Baseline</span></td><td>35/100 — a starting point to track against as fixes roll out, not alarming on its own for a store this size.</td></tr>
-      <tr><td>Link trend</td><td><span class="tag critical">Fix</span></td><td>Only 2 new linking domains discovered vs. 10 lost in the last 60 days — a declining trend that predates this audit.</td></tr>
-      <tr><td>Follow/nofollow mix</td><td><span class="tag good">Pass</span></td><td>100% of internal links are followed; 89.1% of external links are followed, 10.9% nofollow — a normal, healthy ratio.</td></tr>
-      <tr><td>Anchor text distribution</td><td><span class="tag good">Pass</span></td><td>Dominated by bare-URL and brand-name anchors — no manipulative exact-match anchor pattern, aside from the spam URL noted above.</td></tr>
+      <tr><td>Domain Authority</td><td><span class="tag warn">Baseline</span></td><td>35/100 - a starting point to track against as fixes roll out, not alarming on its own for a store this size.</td></tr>
+      <tr><td>Link trend</td><td><span class="tag critical">Fix</span></td><td>Only 2 new linking domains discovered vs. 10 lost in the last 60 days - a declining trend that predates this audit.</td></tr>
+      <tr><td>Follow/nofollow mix</td><td><span class="tag good">Pass</span></td><td>100% of internal links are followed; 89.1% of external links are followed, 10.9% nofollow - a normal, healthy ratio.</td></tr>
+      <tr><td>Anchor text distribution</td><td><span class="tag good">Pass</span></td><td>Dominated by bare-URL and brand-name anchors - no manipulative exact-match anchor pattern, aside from the spam URL noted above.</td></tr>
       <tr><td>Social presence</td><td><span class="tag good">Pass</span></td><td>Consistent @ylstudiogreek handle across Instagram, Facebook, TikTok, linked from every page footer.</td></tr>
-      <tr><td>Authority positioning</td><td><span class="tag warn">Opportunity</span></td><td>Authorized-vendor status with AKA, DST, and Jack and Jill of America is a strong, underused hook for outreach to chapter blogs, HBCU media, and Greek-life influencers — genuine editorial links here would meaningfully move a Domain Authority of 35.</td></tr>
+      <tr><td>Authority positioning</td><td><span class="tag warn">Opportunity</span></td><td>Authorized-vendor status with AKA, DST, and Jack and Jill of America is a strong, underused hook for outreach to chapter blogs, HBCU media, and Greek-life influencers - genuine editorial links here would meaningfully move a Domain Authority of 35.</td></tr>
       <tr><td>Brand mention capture</td><td><span class="tag pending">Pending</span></td><td>Set up Google Alerts for "YL Studio Greek" to catch unlinked mentions worth converting to links.</td></tr>
       <tr><td>Sister brand cross-link</td><td><span class="tag good">Pass</span></td><td>Footer link to leogarnette.com reads as a legitimate co-owned brand reference, not a manipulative link.</td></tr>
     </table>
@@ -703,7 +734,7 @@
         <input type="checkbox" onchange="toggleDone(this)">
         <div>
           <div class="action-title">Unpublish or archive dead seasonal collections</div>
-          <div class="action-desc"><span class="mono">spring-at-yl-coming-soon</span>, <span class="mono">superbowl-sunday</span>, <span class="mono">fall-preview</span>, <span class="mono">coming-soon</span> — removes their duplicate paths entirely.</div>
+          <div class="action-desc"><span class="mono">spring-at-yl-coming-soon</span>, <span class="mono">superbowl-sunday</span>, <span class="mono">fall-preview</span>, <span class="mono">coming-soon</span> - removes their duplicate paths entirely.</div>
         </div>
         <div class="badge-col">Impact<span class="val">High</span></div>
         <div class="badge-col">Effort<span class="val">Low</span></div>
@@ -748,7 +779,7 @@
         <input type="checkbox" onchange="toggleDone(this)">
         <div>
           <div class="action-title">Fix the DST/AKA title tag mix-up</div>
-          <div class="action-desc">At least 3 product pairs share mismatched or duplicate title tags across the AKA and DST lines — confirmed via crawl. Audit the product template for other copy-pasted, uncustomized titles while in there.</div>
+          <div class="action-desc">At least 3 product pairs share mismatched or duplicate title tags across the AKA and DST lines - confirmed via crawl. Audit the product template for other copy-pasted, uncustomized titles while in there.</div>
         </div>
         <div class="badge-col">Impact<span class="val">Medium</span></div>
         <div class="badge-col">Effort<span class="val">Low</span></div>
@@ -757,7 +788,7 @@
         <input type="checkbox" onchange="toggleDone(this)">
         <div>
           <div class="action-title">Pitch chapter/HBCU outreach to reverse the link-loss trend</div>
-          <div class="action-desc">Domain Authority 35, and losing more linking domains than gaining (–8 net in 60 days). Use the authorized-vendor status as the hook for Greek-life media and chapter blog placements.</div>
+          <div class="action-desc">Domain Authority 35, and losing more linking domains than gaining (-8 net in 60 days). Use the authorized-vendor status as the hook for Greek-life media and chapter blog placements.</div>
         </div>
         <div class="badge-col">Impact<span class="val">Medium</span></div>
         <div class="badge-col">Effort<span class="val">Medium</span></div>
@@ -776,7 +807,7 @@
 
   <footer>
     <div class="wrap" style="padding-left:0; padding-right:0;">
-      Compiled from live site data (homepage, product, and collection page fetches), the site's live robots.txt, four Google Search Console exports covering May 4 – Jul 24, 2026 (Pages report, Chart export, Critical/Non-critical issues, and URL-level exports for the noindex and crawled-not-indexed buckets), a Seobility SEO Checker scan of the homepage, a GTmetrix Desktop Performance Report (Aug 1, 2026), a Moz Pro domain-wide link report, and a Screaming Frog crawl (partial — rate-limited by the server after exactly 53 pages; rerun recommended at reduced speed for full orphan-page coverage).
+      Compiled from live site data (homepage, product, and collection page fetches), the site's live robots.txt, four Google Search Console exports covering May 4 - Jul 24, 2026 (Pages report, Chart export, Critical/Non-critical issues, and URL-level exports for the noindex and crawled-not-indexed buckets), a Seobility SEO Checker scan of the homepage, a GTmetrix Desktop Performance Report (Aug 1, 2026), a Moz Pro domain-wide link report, and a Screaming Frog crawl (partial - rate-limited by the server after exactly 53 pages; rerun recommended at reduced speed for full orphan-page coverage).
     </div>
   </footer>
 </div>
